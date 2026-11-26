@@ -1,0 +1,54 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: banking-transaction-system
+
+  # ── Database ──
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/banking_db
+    username: banking_app
+    password: banking_secret_2026
+    hikari: # this connection pool keeps database connections open and ready for use
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 60000
+
+  # ── JPA / Hibernate ──
+  jpa: # to work with databases
+    hibernate: # handle sql generation and execution
+      ddl-auto: none # you DO NOT want your application to delete or alter database structure on startup
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect #to generate pgsql appropriate sql query
+        format_sql: true
+        jdbc:
+          batch_size: 50 #group compatible statements together and send as one batch
+        order_inserts: true
+        order_updates: true
+
+  # ── Schema initialization ──
+  sql:
+    init:
+      mode: never #keep schema management separate
+
+# ── Custom application properties ──
+banking:
+  thread-pool:
+    core-size: 10
+    max-size: 10
+    queue-capacity: 5000
+
+# ── Logging ──
+logging:
+  level:
+    com.banking: INFO
+    org.hibernate.SQL: WARN
+  file:
+    name: logs/banking.log

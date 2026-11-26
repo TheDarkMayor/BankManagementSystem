@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration> <!-- defines logging behavior -->
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"> <!-- the appender determines where logs are sent -->
+        <encoder> <!-- encodes log message into readable text -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [txId=%X{txId}] [%X{txType}] %-5level %logger{36} - %msg%n</pattern> <!-- patternlayoutencoder -->
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"><!-- rolling file appender -->
+        <file>logs/banking.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"><!-- rotate log files according to date and size -->
+            <fileNamePattern>logs/banking.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{ISO8601} [%thread] [txId=%X{txId}] [%X{txType}] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Suppress noisy Hibernate SQL logs -->
+    <logger name="org.hibernate.SQL" level="WARN"/>
+    <logger name="org.hibernate.type.descriptor.sql" level="WARN"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>

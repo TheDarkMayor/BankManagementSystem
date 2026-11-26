@@ -3,7 +3,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 .kotlin
+logs/
 detailed_phase_guide.md
+database_design.md
+java_architecture.md
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
