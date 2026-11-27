@@ -1,0 +1,11 @@
+package com.banking.enums;
+
+public enum ErrorCategory {
+    INSUFFICIENT_FUNDS,
+    ACCOUNT_NOT_FOUND,
+    ACCOUNT_INACTIVE,
+    DUPLICATE_TRANSACTION,
+    INVALID_AMOUNT,
+    SELF_TRANSFER,
+    INTERNAL_ERROR
+}
